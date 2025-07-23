@@ -5,7 +5,7 @@ import { ArrowRight, Download } from "lucide-react";
 import { toast } from "sonner";
 
 interface VideoInputProps {
-  onVideoSubmit: (videoId: string) => void;
+  onVideoSubmit: (videoId: string, format?: string) => void;
   format: string;
   translations: any;
   currentVideoId?: string;
@@ -49,9 +49,9 @@ export const VideoInput = ({ onVideoSubmit, format, translations, currentVideoId
     setShowDownload(true);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (downloadFormat: string) => {
     if (currentVideoId) {
-      onVideoSubmit(currentVideoId);
+      onVideoSubmit(currentVideoId, downloadFormat);
     }
   };
 
@@ -89,13 +89,23 @@ export const VideoInput = ({ onVideoSubmit, format, translations, currentVideoId
               />
             </div>
             
-            <Button 
-              onClick={handleDownload}
-              className="w-full max-w-xs h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-lg font-semibold"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              {translations.downloadVideo}
-            </Button>
+            <div className="flex gap-3 w-full max-w-xs">
+              <Button 
+                onClick={() => handleDownload('mp4')}
+                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-lg font-semibold"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                {translations.downloadMp4}
+              </Button>
+              
+              <Button 
+                onClick={() => handleDownload('mp3')}
+                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-lg font-semibold"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                {translations.downloadMp3}
+              </Button>
+            </div>
           </div>
         </div>
       )}

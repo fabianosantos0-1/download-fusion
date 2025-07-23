@@ -8,11 +8,15 @@ const MP4Page = () => {
   const [language, setLanguage] = useState("en");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoId, setVideoId] = useState("");
+  const [selectedFormat, setSelectedFormat] = useState("mp4");
 
   const currentTranslations = translations[language as keyof typeof translations];
 
-  const handleVideoSubmit = (id: string) => {
+  const handleVideoSubmit = (id: string, downloadFormat?: string) => {
     setVideoId(id);
+    if (downloadFormat) {
+      setSelectedFormat(downloadFormat);
+    }
     setIsModalOpen(true);
   };
 
@@ -64,7 +68,7 @@ const MP4Page = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         videoId={videoId}
-        format="mp4"
+        format={selectedFormat}
         translations={currentTranslations}
       />
     </div>
