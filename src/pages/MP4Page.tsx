@@ -39,6 +39,7 @@ const MP4Page = () => {
             onVideoSubmit={handleVideoSubmit}
             format="mp4"
             translations={currentTranslations}
+            currentVideoId={videoId}
           />
         </div>
 

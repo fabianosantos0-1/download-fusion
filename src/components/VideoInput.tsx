@@ -8,10 +8,12 @@ interface VideoInputProps {
   onVideoSubmit: (videoId: string) => void;
   format: string;
   translations: any;
+  currentVideoId?: string;
 }
 
-export const VideoInput = ({ onVideoSubmit, format, translations }: VideoInputProps) => {
+export const VideoInput = ({ onVideoSubmit, format, translations, currentVideoId }: VideoInputProps) => {
   const [url, setUrl] = useState("");
+  const [showDownload, setShowDownload] = useState(false);
 
   const extractVideoId = (url: string): string | null => {
     const patterns = [
@@ -44,6 +46,13 @@ export const VideoInput = ({ onVideoSubmit, format, translations }: VideoInputPr
     }
 
     onVideoSubmit(videoId);
+    setShowDownload(true);
+  };
+
+  const handleDownload = () => {
+    if (currentVideoId) {
+      onVideoSubmit(currentVideoId);
+    }
   };
 
   return (
@@ -65,6 +74,32 @@ export const VideoInput = ({ onVideoSubmit, format, translations }: VideoInputPr
         </Button>
       </form>
       
+      
+      {currentVideoId && (
+        <div className="mt-8 bg-card rounded-lg p-6 border shadow-lg">
+          <div className="flex flex-col items-center">
+            <div className="relative mb-4">
+              <img
+                src={`https://img.youtube.com/vi/${currentVideoId}/maxresdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full max-w-md rounded-lg shadow-md"
+                onError={(e) => {
+                  e.currentTarget.src = `https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`;
+                }}
+              />
+            </div>
+            
+            <Button 
+              onClick={handleDownload}
+              className="w-full max-w-xs h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-lg font-semibold"
+            >
+              <Download className="w-5 h-5 mr-2" />
+              {translations.downloadVideo}
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 text-center text-sm text-muted-foreground">
         {translations.termsMessage}{" "}
         <a href="#" className="text-primary hover:underline">

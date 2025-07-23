@@ -39,6 +39,7 @@ const MP3Page = () => {
             onVideoSubmit={handleVideoSubmit}
             format="mp3"
             translations={currentTranslations}
+            currentVideoId={videoId}
           />
         </div>
 
