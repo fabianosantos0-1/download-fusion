@@ -4,7 +4,7 @@ import { VideoInput } from "@/components/VideoInput";
 import { DownloadModal } from "@/components/DownloadModal";
 import { translations } from "@/utils/translations";
 
-const Index = () => {
+const MP4Page = () => {
   const [language, setLanguage] = useState("en");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoId, setVideoId] = useState("");
@@ -27,10 +27,10 @@ const Index = () => {
       <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {currentTranslations.youtubeDownloaderTitle}
+            {currentTranslations.youtubeToMp4Converter}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {currentTranslations.downloadConvertGenericDescription}
+            {currentTranslations.downloadConvertDescription}
           </p>
         </div>
 
@@ -44,12 +44,12 @@ const Index = () => {
 
         <div className="bg-card rounded-xl shadow-card p-8 max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
-            {currentTranslations.bestYouTubeDownloader}
+            {currentTranslations.bestYouTubeConverter}
           </h2>
           
           <div className="space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              <strong className="text-foreground">YouTube Downloader</strong> {currentTranslations.youTubeDownloaderDescription}
+              <strong className="text-foreground">YouTube to MP4 Converter</strong> {currentTranslations.youTubeConverterDescription}
             </p>
             
             <p>
@@ -70,4 +70,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default MP4Page;
