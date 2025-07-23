@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, AlertTriangle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -11,6 +12,30 @@ interface DownloadModalProps {
 }
 
 export const DownloadModal = ({ isOpen, onClose, videoId, format, translations }: DownloadModalProps) => {
+  const [hasAdblock, setHasAdblock] = useState(false);
+
+  useEffect(() => {
+    const detectAdblock = () => {
+      const adTest = document.createElement('div');
+      adTest.innerHTML = '&nbsp;';
+      adTest.className = 'adsbox';
+      adTest.style.position = 'absolute';
+      adTest.style.left = '-999px';
+      document.body.appendChild(adTest);
+      
+      setTimeout(() => {
+        if (adTest.offsetHeight === 0) {
+          setHasAdblock(true);
+        }
+        document.body.removeChild(adTest);
+      }, 100);
+    };
+
+    if (isOpen) {
+      detectAdblock();
+    }
+  }, [isOpen]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -30,7 +55,19 @@ export const DownloadModal = ({ isOpen, onClose, videoId, format, translations }
             {translations.downloadMessage}
           </p>
           
-          <div className="bg-muted rounded-lg p-4">
+          {hasAdblock && (
+            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-destructive" />
+              <p className="text-sm text-destructive">
+                Desbloquear o AdBlock para baixar o arquivo
+              </p>
+            </div>
+          )}
+
+          <div className="bg-muted rounded-lg p-4 space-y-2">
+            <p className="text-xs text-muted-foreground text-center mb-2">
+              Clique após carregar, clique novamente
+            </p>
             <iframe
               src={`https://apiyt.cc/${format}/${videoId}`}
               style={{ width: "100%", height: "60px", border: "none" }}
