@@ -54,7 +54,7 @@ const MP3Page = () => {
           
           <div className="space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              <strong className="text-foreground">YouTube to MP3 Converter</strong> {currentTranslations.youTubeMp3ConverterDescription}
+              <strong className="text-foreground">YT-downloader</strong> {currentTranslations.youTubeMp3ConverterDescription}
             </p>
             
             <p>
