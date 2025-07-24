@@ -1,38 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { VideoInput } from "@/components/VideoInput";
 import { DownloadModal } from "@/components/DownloadModal";
-import { Footer } from "@/components/Footer";
-import { AdBlockDetector } from "@/components/AdBlockDetector";
 import { translations } from "@/utils/translations";
-import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [language, setLanguage] = useState("en");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoId, setVideoId] = useState("");
-  const [adSpace1, setAdSpace1] = useState("");
-  const [adSpace2, setAdSpace2] = useState("");
 
   const currentTranslations = translations[language as keyof typeof translations];
-
-  useEffect(() => {
-    fetchAdSettings();
-  }, []);
-
-  const fetchAdSettings = async () => {
-    const { data, error } = await supabase
-      .from('site_settings')
-      .select('*')
-      .in('setting_key', ['ad_space_1', 'ad_space_2']);
-    
-    if (!error && data) {
-      const ad1 = data.find(s => s.setting_key === 'ad_space_1');
-      const ad2 = data.find(s => s.setting_key === 'ad_space_2');
-      setAdSpace1(ad1?.setting_value || '');
-      setAdSpace2(ad2?.setting_value || '');
-    }
-  };
 
   const handleVideoSubmit = (id: string) => {
     setVideoId(id);
@@ -89,9 +66,6 @@ const Index = () => {
         format="mp4"
         translations={currentTranslations}
       />
-
-      <Footer adSpace1={adSpace1} adSpace2={adSpace2} />
-      <AdBlockDetector />
     </div>
   );
 };
